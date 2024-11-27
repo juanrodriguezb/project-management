@@ -1,21 +1,24 @@
-import { createPortal } from "react-dom";
-import { forwardRef, useImperativeHandle, useRef } from "react";
-import Button from "./Button";
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
-const Modal = forwardRef( function Modal({ children, buttonCaption }, ref) {
+import Button from './Button.jsx';
 
+const Modal = forwardRef(function Modal({ children, buttonCaption }, ref) {
     const dialog = useRef();
 
-    useImperativeHandle(ref, ()=>{
+    useImperativeHandle(ref, () => {
         return {
-            open(){
+            open() {
                 dialog.current.showModal();
-            }
-        }
+            },
+        };
     });
 
     return createPortal(
-        <dialog ref={dialog} className="backdrop:bg-stone-900/90 p-4 rounded-md shadow-md">
+        <dialog
+            ref={dialog}
+            className="backdrop:bg-stone-900/90 p-4 rounded-md shadow-md"
+        >
             {children}
             <form method="dialog" className="mt-4 text-right">
                 <Button>{buttonCaption}</Button>
@@ -23,6 +26,6 @@ const Modal = forwardRef( function Modal({ children, buttonCaption }, ref) {
         </dialog>,
         document.getElementById('modal-root')
     );
-})
+});
 
 export default Modal;
